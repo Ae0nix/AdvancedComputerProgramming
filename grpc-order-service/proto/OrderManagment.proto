@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package ecommerce;
+
+service OrderManagment{
+    rpc addOrder(Order) returns (StringMessage){};
+    rpc getOrder(StringMessage) returns (Order){};
+    rpc searchOrders(StringMessage) returns (stream Order){};
+    rpc processOrders(stream Order) returns (stream Shipment){};
+}
+
+message Order{
+    string id = 1;
+    repeated string itemList = 2;
+    string description = 3;
+    float price = 4;
+    string destination = 5;
+}
+
+message Shipment{
+    string id = 1;
+    string state = 2;
+    repeated Order orderList = 3;
+}
+
+message StringMessage{
+    string value = 1;
+}
