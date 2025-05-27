@@ -46,4 +46,3 @@ Questa repository raccoglie tutti gli **esercizi** e gli **esempi pratici** svil
 
 🎓 Advanced Computer Programming – Università degli studi di Napoli "Federico II", 2025
 ✍️ Autore: Ae0nix
-

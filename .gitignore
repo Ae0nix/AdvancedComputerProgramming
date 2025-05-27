@@ -1,4 +1,4 @@
 #Escludiamo il virtual environtment
 acp-venv/
 slides/
-
+*.sh
