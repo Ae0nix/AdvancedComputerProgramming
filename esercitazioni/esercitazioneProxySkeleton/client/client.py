@@ -1,4 +1,4 @@
-from MagazzinoProxy import MagazzinoProxy
+from client.MagazzinoProxy import MagazzinoProxy
 import socket
 import threading as mt
 import random
@@ -45,13 +45,15 @@ def thread_func(host, port, request_type):
             articolo = PRODUCT_TYPE[random.randint(0,1)]
             id = random.randint(1,100)
             ### chiamiamo la funzione deposita del proxy, devo inizializzare un proxy al quale passare i dettagli della connessione
-            
+            response = proxy.deposita(articolo, id)
+            ### si potrebbe implementare un meccanismo che controlli la risposta per vedere se è andato tutto a buon fine
             
         elif request_type == "B":
             ### scelgo a caso un articolo
             articolo = PRODUCT_TYPE[random.randint(0,1)]
             ### chiamo la funzione preleva del proxy
-            
+            response = proxy.preleva(articolo)
+
         else:
             print("[CLIENT] An unsopported type of client has been used")
             sys.exit(-1)
