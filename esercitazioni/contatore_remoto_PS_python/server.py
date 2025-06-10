@@ -3,7 +3,7 @@ from serverImpl import serverImpl
 
 def main():
     impl = serverImpl()
-    skeleton = CounterSkeleton(impl)
+    skeleton = CounterSkeleton(impl, port=55348)
     skeleton.run_function()
 
 

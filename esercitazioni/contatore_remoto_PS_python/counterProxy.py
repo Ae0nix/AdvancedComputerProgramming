@@ -13,6 +13,7 @@ class CounterProxy(ICounter):
 
             messageToSend = f"setCount-{id}-{initial_value}"
             s.send(messageToSend.encode("utf-8"))
+            print(f"[DEBUG] MESSAGGIO INVIATO: {messageToSend}")
 
             result = s.recv(1024).decode("utf-8")
             return result
@@ -21,8 +22,9 @@ class CounterProxy(ICounter):
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             s.connect((self.host, self.port))
 
-            messageToSend = f"increment-{id}"
+            messageToSend = f"increment"
             s.send(messageToSend.encode("utf-8"))
+            print(f"[DEBUG] MESSAGGIO INVIATO: {messageToSend}")
 
             result = s.recv(1024).decode("utf-8")
             return result
@@ -31,8 +33,9 @@ class CounterProxy(ICounter):
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             s.connect((self.host, self.port))
 
-            messageToSend = f"sum-{id}-{increment}"
+            messageToSend = f"sum-{increment}"
             s.send(messageToSend.encode("utf-8"))
+            print(f"[DEBUG] MESSAGGIO INVIATO: {messageToSend}")
 
             result = s.recv(1024).decode("utf-8")
             return result

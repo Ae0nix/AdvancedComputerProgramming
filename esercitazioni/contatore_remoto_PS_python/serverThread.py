@@ -3,8 +3,9 @@ POSSIBLE_METHOD=["setCount", "sum", "increment"]
 def serverThread(skeleton, conn):
     message = conn.recv(1024).decode("utf-8")
 
+    print(f"[SKELETON] Message received {message}")
     requestType = message.split("-")[0]
-
+    print(f"[DEBUG] request type {requestType} !!!!!!!!!!!!!!")
     match requestType:
         case "setCount":
             id = message.split("-")[1]
@@ -19,4 +20,4 @@ def serverThread(skeleton, conn):
             result = skeleton.increment()
 
 
-    conn.send(result).encode("utf-8")
+    conn.send(str(result).encode("utf-8"))

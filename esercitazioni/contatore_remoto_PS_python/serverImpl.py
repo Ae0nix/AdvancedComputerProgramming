@@ -10,6 +10,7 @@ class serverImpl(ICounter):
 
     def sum(self, increment):
         with self.counterLock:
+            increment = int(increment)
             print(f"[SERVER] Il valore del counter è stato correttamente incrementato di {increment}")
             self.counter += increment
             return self.counter
@@ -22,6 +23,7 @@ class serverImpl(ICounter):
 
     def setCount(self, id, initial_value):
         with self.counterLock:
+            initial_value = int(initial_value)
             print(f"[SERVER] Il thread con id: {id} ha settato il valore del counter a {initial_value}")
             self.counter = initial_value
             return self.counter

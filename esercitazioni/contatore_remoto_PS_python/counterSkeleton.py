@@ -14,7 +14,7 @@ class CounterSkeleton(ICounter):
         return self.impl.sum(increment)
     
     def increment(self):
-        self.impl.increment()
+        return self.impl.increment()
 
     def setCount(self, id, initial_value):
         return self.impl.setCount(id, initial_value)
@@ -30,11 +30,11 @@ class CounterSkeleton(ICounter):
 
             while True:
                 conn, addr = s.accept()
+                print("[DEBUG] Ricevuta connessione correttamente da parte di un client, la affido ad un thread")
                 th = mt.Thread(target=serverThread, args=(self, conn)) 
+                th.start()
                 threads.append(th)
 
 
             for thread in threads:
                 thread.join()
-
-
