@@ -2,7 +2,7 @@ import time
 
 import multiprocessing as mp
 import stomp
-
+import sys
 import grpc
 import Servizio_pb2 as s_pb2
 import Servizio_pb2_grpc as s_pb2_grpc
@@ -58,11 +58,20 @@ class MyListener(stomp.ConnectionListener):
 
 
 if __name__ == "__main__":
-    conn = stomp.Connection([('127.0.0.1', 61613)])
-    conn.set_listener('', MyListener())
-    conn.start()
 
-    conn.connect('admin', 'password', wait=True)
+    host = "localhost"
+    try:
+        port = sys.argv[1]
+    except IndexError:
+        print("[DISPATCHER] Usage dispatcer.py [porta del server]")
+        sys.exit(-1)
+
+
+    conn = stomp.Connection([('127.0.0.1', 61613)])
+    conn.set_listener('', MyListener(host, port))
+
+
+    conn.connect(wait=True)
 
     conn.subscribe(destination="/queue/richieste", id = 1, ack='auto')
 

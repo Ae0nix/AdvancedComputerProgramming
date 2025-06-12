@@ -1,5 +1,6 @@
 from multiprocessing import Lock, Condition
 
+from concurrent import futures
 import grpc
 import Servizio_pb2 as s_pb2
 import Servizio_pb2_grpc as s_pb2_grpc
@@ -55,9 +56,7 @@ class Servizio(s_pb2_grpc.ServizioServicer):
 
             self.consumer_cv.notify()
 
-
-    def serve():
-        pass
+        
 
 
     def theres_a_space(self, queue):
@@ -65,3 +64,21 @@ class Servizio(s_pb2_grpc.ServizioServicer):
     
     def theres_an_item(self, queue):
         return len(queue) > 0
+    
+
+if __name__ == "__main__":
+
+    server = grpc.server(
+            futures.ThreadPoolExecutor(max_workers=10), 
+            options=(('grpc.so_reuseport', 0),)
+        )
+    s_pb2_grpc.add_ServizioServicer_to_server(Servizio(), server)
+
+    port = server.add_insecure_port("[::]:50051")
+    print('Starting server. Listening on port ' + str(port))
+
+    server.start()
+
+    print("Server running ... ")
+
+    server.wait_for_termination()
