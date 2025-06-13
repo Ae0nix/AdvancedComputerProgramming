@@ -42,7 +42,7 @@ class statisticStub(object):
         self.getMean = channel.unary_unary(
                 '/statistic.statistic/getMean',
                 request_serializer=Statistics__pb2.MeanRequest.SerializeToString,
-                response_deserializer=Statistics__pb2.StringMessaage.FromString,
+                response_deserializer=Statistics__pb2.StringMessage.FromString,
                 _registered_method=True)
 
 
@@ -72,7 +72,7 @@ def add_statisticServicer_to_server(servicer, server):
             'getMean': grpc.unary_unary_rpc_method_handler(
                     servicer.getMean,
                     request_deserializer=Statistics__pb2.MeanRequest.FromString,
-                    response_serializer=Statistics__pb2.StringMessaage.SerializeToString,
+                    response_serializer=Statistics__pb2.StringMessage.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -128,7 +128,7 @@ class statistic(object):
             target,
             '/statistic.statistic/getMean',
             Statistics__pb2.MeanRequest.SerializeToString,
-            Statistics__pb2.StringMessaage.FromString,
+            Statistics__pb2.StringMessage.FromString,
             options,
             channel_credentials,
             insecure,

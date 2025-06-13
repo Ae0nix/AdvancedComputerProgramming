@@ -24,21 +24,21 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x10Statistics.proto\x12\tstatistic\"\x1f\n\x0eStringMessaage\x12\r\n\x05value\x18\x01 \x01(\t\"\x07\n\x05\x45mpty\"\'\n\x06Sensor\x12\n\n\x02id\x18\x01 \x01(\t\x12\x11\n\tdata_type\x18\x02 \x01(\t\"3\n\x0bMeanRequest\x12\x11\n\tsensor_id\x18\x01 \x01(\t\x12\x11\n\tdata_type\x18\x02 \x01(\t2\x82\x01\n\tstatistic\x12\x35\n\ngetSensors\x12\x10.statistic.Empty\x1a\x11.statistic.Sensor\"\x00\x30\x01\x12>\n\x07getMean\x12\x16.statistic.MeanRequest\x1a\x19.statistic.StringMessaage\"\x00\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x10Statistics.proto\x12\tstatistic\"\x1e\n\rStringMessage\x12\r\n\x05value\x18\x01 \x01(\t\"\x07\n\x05\x45mpty\"\'\n\x06Sensor\x12\n\n\x02id\x18\x01 \x01(\t\x12\x11\n\tdata_type\x18\x02 \x01(\t\"3\n\x0bMeanRequest\x12\x11\n\tsensor_id\x18\x01 \x01(\t\x12\x11\n\tdata_type\x18\x02 \x01(\t2}\n\tstatistic\x12\x33\n\ngetSensors\x12\x10.statistic.Empty\x1a\x11.statistic.Sensor0\x01\x12;\n\x07getMean\x12\x16.statistic.MeanRequest\x1a\x18.statistic.StringMessageb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'Statistics_pb2', _globals)
 if not _descriptor._USE_C_DESCRIPTORS:
   DESCRIPTOR._loaded_options = None
-  _globals['_STRINGMESSAAGE']._serialized_start=31
-  _globals['_STRINGMESSAAGE']._serialized_end=62
-  _globals['_EMPTY']._serialized_start=64
-  _globals['_EMPTY']._serialized_end=71
-  _globals['_SENSOR']._serialized_start=73
-  _globals['_SENSOR']._serialized_end=112
-  _globals['_MEANREQUEST']._serialized_start=114
-  _globals['_MEANREQUEST']._serialized_end=165
-  _globals['_STATISTIC']._serialized_start=168
-  _globals['_STATISTIC']._serialized_end=298
+  _globals['_STRINGMESSAGE']._serialized_start=31
+  _globals['_STRINGMESSAGE']._serialized_end=61
+  _globals['_EMPTY']._serialized_start=63
+  _globals['_EMPTY']._serialized_end=70
+  _globals['_SENSOR']._serialized_start=72
+  _globals['_SENSOR']._serialized_end=111
+  _globals['_MEANREQUEST']._serialized_start=113
+  _globals['_MEANREQUEST']._serialized_end=164
+  _globals['_STATISTIC']._serialized_start=166
+  _globals['_STATISTIC']._serialized_end=291
 # @@protoc_insertion_point(module_scope)

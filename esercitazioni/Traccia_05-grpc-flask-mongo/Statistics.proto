@@ -3,12 +3,12 @@ syntax = "proto3";
 package statistic;
 
 service statistic{
-    rpc getSensors(Empty) returns (stream Sensor){};
-    rpc getMean(MeanRequest) returns (StringMessaage){};
+    rpc getSensors(Empty) returns (stream Sensor);
+    rpc getMean(MeanRequest) returns (StringMessage);
 }
 
 
-message StringMessaage{
+message StringMessage{
     string value = 1;
 }
 

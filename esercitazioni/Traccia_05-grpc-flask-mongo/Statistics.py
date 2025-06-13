@@ -24,7 +24,8 @@ class StatisticsServicer(s_pb2_grpc.statisticServicer):
             print(f"An error occurred: {e}")
         else:
             for sensor in sensors:
-                yield s_pb2.Sensor(sensor["_id"], sensor["data_type"])
+                print(f"[GET SENSORS] Sending sensor: {str(sensor)}")
+                yield s_pb2.Sensor(id=str(sensor["_id"]), data_type=sensor["data_type"])
 
     def getMean(self, request, context):
         sensor_id = request.sensor_id
@@ -32,12 +33,12 @@ class StatisticsServicer(s_pb2_grpc.statisticServicer):
 
         match data_type:
             case "temp":
-                measure_collection = self.db["temp"]
+                measure_collection = self.db["temp_data"]
             case "press":
-                measure_collection = self.db["press"]
+                measure_collection = self.db["press_data"]
 
         try: 
-            list_of_measures = list(measure_collection.find({"sensor_id":sensor_id}))
+            list_of_measures = list(measure_collection.find({"sensor_id":int(sensor_id)}))
         except PyMongoError as e:
             print(f"An error occurred: {e}")
             sys.exit(-1)
@@ -46,22 +47,24 @@ class StatisticsServicer(s_pb2_grpc.statisticServicer):
             for measure in list_of_measures:
                 sum += measure["data"]
 
-
-        if len(list_of_measures != 0):
+        if len(list_of_measures) != 0:
             mean_value = sum/len(list_of_measures)
         else:
             mean_value = 0        
         
-        return s_pb2.StringMessaage(str(mean_value))
+        return s_pb2.StringMessage(value=str(mean_value))
     
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     s_pb2_grpc.add_statisticServicer_to_server(StatisticsServicer(), server)
 
     server.add_insecure_port("[::]:50051")
+    
     server.start()
+    print("[STATISTICS]✅ Server started ")
+
     server.wait_for_termination()
 
 
 if __name__ == "__main__":
-    serve()<
+    serve()
