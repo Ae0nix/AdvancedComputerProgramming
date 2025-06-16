@@ -10,7 +10,7 @@ if __name__ == "__main__":
 
     try:
         host = "localhost"
-        port = sys.argv[1]
+        port = int(sys.argv[1])
     except IndexError as e:
         print("[CLIENT] Usage client.py [PORT]")
         sys.exit(-1)

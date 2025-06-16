@@ -6,12 +6,34 @@ import stomp
 import multiprocessing as mp 
 
 def process_func(conn, skeleton):
-    message = conn.recv(1024)
+    message = conn.recv(1024).decode("utf-8")
+
+    if message:
+        print("[SKELETON] Message received correctly from the client")
+        conn.send("ACK".encode("utf-8"))
 
     path_file = message.split("#")[0]
     tipo = message.split("#")[1]
 
     skeleton.print(path_file, tipo)
+
+
+def Consumatore(skeleton):
+    conn = stomp.Connection([("127.0.0.1", 61613)])
+    conn.connect(wait=True)
+
+    while True:
+        
+        request = skeleton.consuma()
+        
+        tipo_richiesta = request.split('-')[1]
+        if tipo_richiesta == "color":
+            queue_name = "/queue/color"
+        else:
+            queue_name = "/queue/bw"
+
+        conn.send(body=request, destination=queue_name)
+
 
 
 
@@ -20,19 +42,19 @@ class MyListener():
         print('received a message "%s"' % frame.body)
 
 
-class printerServerSkeleton(ABC, IPrinter):
+class printerServerSkeleton(IPrinter, ABC):
     def __init__(self, host, port):
         self.host = host
         self.port = port
+
     
     @abstractmethod
     def print(self, pathFile, tipo):
         pass
 
     def run_func(self):
-        # conn = stomp.Connection()
-        # conn.set_listener('', MyListener())
-        # conn.connect(wait=True)
+        cons = mp.Process(target=Consumatore, args=(self,))
+        cons.start()
 
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             s.bind((self.host, self.port))
