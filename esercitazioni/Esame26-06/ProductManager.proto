@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package manager;
+
+service ProductManager{
+    rpc buy(Empy) returns (Product){};
+    rpc sell(SellingRequest) returns (ACK){};
+}
+
+
+message Empy{
+
+}
+
+message SellingRequest{
+    int64 serial_number = 1;
+}
+
+message Product{
+    int64 serial_number = 1;
+}
+
+message ACK{
+    bool value = 1;
+}
