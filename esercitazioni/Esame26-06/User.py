@@ -28,6 +28,8 @@ def thread_func(i, port):
         result = stub.buy(pm_pb2.Empy())
         print(f"[USER] Extracted ID: {str(result.serial_number)}")
 
+    channel.close()
+
 
 if __name__ == "__main__":
 
