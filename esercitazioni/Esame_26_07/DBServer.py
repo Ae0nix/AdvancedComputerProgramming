@@ -16,6 +16,7 @@ def create_booking():
     request_message = request.get_json()
     try:
         collection.insert_one(request_message)
+        print("[DBSERVER] Added")
     except Exception as e:
         print("[DBSERVER] Operation failed")
         return "Fail-"+str(e), 500
@@ -39,18 +40,20 @@ def update_booking():
         "operator":operator, 
         "nights": {"$gte": request_message["nights"]}
         }))
-
-
-
-
-    try:
-
-    except Exception as e:
-        print("[DBSERVER] Operation failed")
-        return "Fail-"+str(e), 500
-    else:
-        print("[DBSERVER] Booking updated correctly")
-        return "ACK", 200
+    for booking in list_of_bookings:
+        current_price = booking["cost"]
+        new_price = current_price-request_message["discount"]
+        if new_price < 0:
+            new_price = 0
+        try:
+            collection.update_one(
+                booking,
+                {"$set":{"cost":new_price}}
+            )
+        except Exception as e:
+            print("[DBSERVER] Something went wrong while updating")
+            return "Fail", 500
+    return "ACK", 200
 
 
 

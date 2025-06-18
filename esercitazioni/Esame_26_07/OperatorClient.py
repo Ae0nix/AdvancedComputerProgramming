@@ -23,7 +23,7 @@ def run_function(i, conn, operator):
     #UPDATE
     else:
         discount = random.randint(10, 50)
-        night = random.randint(1,10)
+        nights = random.randint(1,10)
 
         request = f"UPDATE-{str(discount)}-{str(operator)}-{str(nights)}"
 
@@ -43,7 +43,8 @@ if __name__ == "__main__":
     try:
         operator = sys.argv[1]
     except IndexError as e:
-        print("U")
+        print("USAGE ERRATO")
+        sys.exit(-1)
 
 
     conn = stomp.Connection([("127.0.0.1", 61613)])
@@ -55,7 +56,7 @@ if __name__ == "__main__":
     threads = []
     for i in range(6):
         th = mt.Thread(target=run_function, args=(i, conn, operator))
-        th.append()
+        threads.append(th)
         th.start()
     
 
