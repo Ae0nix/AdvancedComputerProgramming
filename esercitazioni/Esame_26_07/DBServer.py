@@ -12,7 +12,12 @@ def create_booking():
     db = get_database()
     collection = db["booking_collection"]
 
-    message = 
+    request_message = request.get_json()
+    try:
+        collection.insert_one(request_message)
+    except:
+        
+    return "ACK", 200
 
 
 
